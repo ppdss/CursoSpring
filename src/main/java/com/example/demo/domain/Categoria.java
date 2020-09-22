@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+=======
+>>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 =======
 >>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 
@@ -25,7 +28,10 @@ public class Categoria implements Serializable {
 	private String nome;
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@JsonManagedReference
+=======
+>>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 =======
 >>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 	@ManyToMany(mappedBy = "categorias")

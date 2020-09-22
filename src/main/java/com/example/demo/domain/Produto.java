@@ -13,8 +13,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+=======
+>>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 =======
 >>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 @Entity
@@ -29,7 +32,11 @@ public class Produto implements Serializable {
 	private Double preco;
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@JsonBackReference
+=======
+	
+>>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 =======
 	
 >>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec

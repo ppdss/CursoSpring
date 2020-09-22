@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.domain.Categoria;
 import com.example.demo.repositories.CategoriaRepository;
 
+import com.example.demo.servicies.exceptions.ObjectNotFoundException;
+
 @Service
 public class CategoriaService {
 
@@ -20,8 +22,11 @@ public class CategoriaService {
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
-	public Categoria find(Integer id) {
+	public Categoria find(Integer id) throws  ObjectNotFoundException {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(()-> new ObjectNotFoundException(
+				"Objeto não encontrado! " + id +
+				" Tipo: " + Categoria.class.getName()));
+		
 	}
 }

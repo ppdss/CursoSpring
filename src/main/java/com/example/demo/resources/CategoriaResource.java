@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.domain.Categoria;
 import com.example.demo.servicies.CategoriaService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 //url do endpoint da requisição
 @RequestMapping(value="/categorias")
@@ -27,7 +29,7 @@ public class CategoriaResource {
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find 
 	/*indica que o Id da Url vai para a variável id do método*/
-	(@PathVariable Integer id) {
+	(@PathVariable Integer id) throws ObjectNotFoundException {
 
 	
 		Categoria obj = service.find(id);

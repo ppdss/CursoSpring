@@ -9,14 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-=======
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
-=======
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
+
 
 @Entity
 public class Categoria implements Serializable {
@@ -26,14 +21,12 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+	// @ManyToMany utilizado para relacionar duas tabelas (n para n)
+	// @JsonManagedReference Utilizar no lado onde você quer
+	// que venha os objetos associados
+	// nesse caso, as categoria e seus produtos
 	@JsonManagedReference
-=======
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
-=======
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos  = new ArrayList<>();
 	 

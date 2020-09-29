@@ -12,14 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-=======
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
-=======
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
 @Entity
 public class Produto implements Serializable {
 
@@ -30,18 +25,13 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
+
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
+	// @JsonBackReference Utilizado para sinalizar que já foi buscado essa tabela do outro lado
+	// no caso @categoria
+	// @JoinTable  define tabela de relação entre produtos e categorias (n para n)
 	@JsonBackReference
-=======
-	
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
-=======
-	
->>>>>>> 9684f97832c86fc7533c07b22f239a2e17aa62ec
-	@ManyToMany
-	// define tabela de relação entre produtos e categorias 
+	@ManyToMany	
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 	joinColumns = @JoinColumn(name = "produto_id"),
 	inverseJoinColumns = @JoinColumn(name = "categoria_id")

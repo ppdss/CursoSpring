@@ -1,7 +1,5 @@
 package com.example.demo.resources;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +21,17 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 
-	// ResponseEntity encapsula respostas REST
-	// metodo de listar com id, value é uma prop  do
-	// requestMapping que adiciona os parametros da requição
+	// value é uma prop  do requestMapping que adiciona os parametros da requição
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find 
-	/*indica que o Id da Url vai para a variável id do método*/
-	(@PathVariable Integer id) throws ObjectNotFoundException {
+	
+	/*
+	// ResponseEntity encapsula respostas REST
+	// parâmetro precisa da anotação  @PathVariable para mapear o id vindo da url para o id que será buscado
+	 */
+	public ResponseEntity<?> find (@PathVariable Integer id) throws ObjectNotFoundException {
 
 	
-		Categoria obj = service.find(id);
+		Categoria obj = service.buscar(id);
 		
 		return ResponseEntity.ok(obj);
 	}

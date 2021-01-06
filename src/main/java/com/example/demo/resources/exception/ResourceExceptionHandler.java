@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.example.demo.servicies.exceptions.ObjectNotFoundException;
 
+// Controller utilizado para lançar excessões http,
+// precisa-se dessa assinatura
+
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	

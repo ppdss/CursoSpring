@@ -27,14 +27,15 @@ public class Produto implements Serializable {
 	private Double preco;
 
 	
-	// @JsonBackReference Utilizado para sinalizar que já foi buscado essa tabela do outro lado
-	// no caso @categoria
+	// @JsonBackReference Utilizado para sinalizar que já foi referenciada essa tabela do outro lado
+	// no caso @categoria, para que nao haja referencia ciclica 
+	// Ex: Categoria busca produtos e produtos procura categorias
 	// @JoinTable  define tabela de relação entre produtos e categorias (n para n)
 	@JsonBackReference
 	@ManyToMany	
-	@JoinTable(name = "PRODUTO_CATEGORIA",
-	joinColumns = @JoinColumn(name = "produto_id"),
-	inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	@JoinTable(name = "PRODUTO_CATEGORIA", // nome da tabela n para n com as relações entre categorias e produtos 
+	joinColumns = @JoinColumn(name = "produto_id"), // nome da chave estrangeira que referencia a classe
+	inverseJoinColumns = @JoinColumn(name = "categoria_id") // nome da chave estrangeira da categoria, 'outra classe'
 			)
 	private List<Categoria> categorias = new ArrayList<>();
 	

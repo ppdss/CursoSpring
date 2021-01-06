@@ -22,12 +22,11 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 
-	// @ManyToMany utilizado para relacionar duas tabelas (n para n)
 	// @JsonManagedReference Utilizar no lado onde você quer
 	// que venha os objetos associados
 	// nesse caso, as categoria e seus produtos
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "categorias")
+	@ManyToMany(mappedBy = "categorias") // inidica que o mapeamento n para n foi criado no atributo categorias de Produto
 	private List<Produto> produtos  = new ArrayList<>();
 	 
 	public Categoria() {

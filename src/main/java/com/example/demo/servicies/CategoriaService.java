@@ -22,7 +22,7 @@ public class CategoriaService {
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
-	public Categoria find(Integer id) throws  ObjectNotFoundException {
+	public Categoria buscar(Integer id) throws  ObjectNotFoundException {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException(
 				"Objeto não encontrado! " + id +

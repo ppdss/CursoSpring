@@ -1,23 +1,32 @@
 package com.curso.spring;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.curso.spring.domain.Categoria;
 import com.curso.spring.domain.Cidade;
 import com.curso.spring.domain.Cliente;
 import com.curso.spring.domain.Endereco;
 import com.curso.spring.domain.Estado;
+import com.curso.spring.domain.Pagamento;
+import com.curso.spring.domain.PagamentoComBoleto;
+import com.curso.spring.domain.PagamentoComCartao;
+import com.curso.spring.domain.Pedido;
 import com.curso.spring.domain.Produto;
+import com.curso.spring.enums.EstadoPagamento;
 import com.curso.spring.enums.TipoCliente;
 import com.curso.spring.repositories.CategoriaRepository;
 import com.curso.spring.repositories.CidadeRepository;
 import com.curso.spring.repositories.ClienteRepository;
 import com.curso.spring.repositories.EnderecoRepository;
 import com.curso.spring.repositories.EstadoRepository;
+import com.curso.spring.repositories.PagamentoRepository;
+import com.curso.spring.repositories.PedidoRepository;
 import com.curso.spring.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -39,6 +48,10 @@ public class CursoSpringApplication implements CommandLineRunner{
 	private EnderecoRepository enderecoRepository;
 	@Autowired
 	private ClienteRepository clienteRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -75,6 +88,16 @@ public class CursoSpringApplication implements CommandLineRunner{
 		Endereco e1 = new Endereco(null, "Rua Bejupirá", "106", "Apto 102", "Porto de Galinhas" , "5555555", cli1 , c1);
 		Endereco e2 = new Endereco(null, "Avenida Antonio Carlos", "265", "Apto 405", "Lagoinha" , "5555555", cli1 , c2);
 						
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("07/01/2021 23:03"), cli1, e2);
+		
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("07/01/2021 23:03"), null);
+		ped2.setPagamento(pagto2);
 		
 		/* 
 		 * retorna lista de cidades e adiciona todos os objetos na 
@@ -91,7 +114,7 @@ public class CursoSpringApplication implements CommandLineRunner{
 		p3.getCategorias().addAll(Arrays.asList(cat1));
  
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
-
+		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
@@ -99,6 +122,10 @@ public class CursoSpringApplication implements CommandLineRunner{
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		
+		
 	}
 
 }

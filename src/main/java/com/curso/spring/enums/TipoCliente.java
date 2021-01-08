@@ -1,4 +1,4 @@
-package com.example.demo.domain.enums;
+package com.curso.spring.enums;
 
 public enum TipoCliente {
 	

@@ -1,12 +1,12 @@
-package com.example.demo.repositories;
+package com.curso.spring.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.domain.Produto;
+import com.curso.spring.domain.Cliente;
 
 /*Interface capaz de realizar as operações no banco de dados*/
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
+public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	
 }

@@ -1,4 +1,4 @@
-package com.example.demo.resources.exception;
+package com.curso.spring.resources.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.demo.servicies.exceptions.ObjectNotFoundException;
+import com.curso.spring.servicies.exceptions.ObjectNotFoundException;
 
 // Controller utilizado para lançar excessões http,
 // precisa-se dessa assinatura

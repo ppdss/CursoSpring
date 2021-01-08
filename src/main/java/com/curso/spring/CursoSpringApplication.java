@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.curso.spring;
 
 import java.util.Arrays;
 
@@ -6,20 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.example.demo.domain.Categoria;
-import com.example.demo.domain.Cidade;
-import com.example.demo.domain.Cliente;
-import com.example.demo.domain.Endereco;
-import com.example.demo.domain.Estado;
-import com.example.demo.domain.Produto;
-import com.example.demo.domain.enums.TipoCliente;
-import com.example.demo.repositories.CategoriaRepository;
-import com.example.demo.repositories.CidadeRepository;
-import com.example.demo.repositories.ClienteRepository;
-import com.example.demo.repositories.EnderecoRepository;
-import com.example.demo.repositories.EstadoRepository;
-import com.example.demo.repositories.ProdutoRepository;
+import com.curso.spring.domain.Categoria;
+import com.curso.spring.domain.Cidade;
+import com.curso.spring.domain.Cliente;
+import com.curso.spring.domain.Endereco;
+import com.curso.spring.domain.Estado;
+import com.curso.spring.domain.Produto;
+import com.curso.spring.enums.TipoCliente;
+import com.curso.spring.repositories.CategoriaRepository;
+import com.curso.spring.repositories.CidadeRepository;
+import com.curso.spring.repositories.ClienteRepository;
+import com.curso.spring.repositories.EnderecoRepository;
+import com.curso.spring.repositories.EstadoRepository;
+import com.curso.spring.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class CursoSpringApplication implements CommandLineRunner{

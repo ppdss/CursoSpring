@@ -1,12 +1,12 @@
-package com.example.demo.repositories;
+package com.curso.spring.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.domain.Endereco;;
+import com.curso.spring.domain.Estado;
 
 /*Interface capaz de realizar as operações no banco de dados*/
 @Repository
-public interface EnderecoRepository extends JpaRepository<Endereco, Integer>{
+public interface EstadoRepository extends JpaRepository<Estado, Integer>{
 	
 }

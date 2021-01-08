@@ -1,4 +1,4 @@
-package com.example.demo.resources;
+package com.curso.spring.resources;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.domain.Categoria;
-import com.example.demo.servicies.CategoriaService;
+import com.curso.spring.domain.Cliente;
+import com.curso.spring.servicies.ClienteService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 //url do endpoint da requisição
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
+@RequestMapping(value="/clientes")
+public class ClienteResource {
 
 	@Autowired
-	private CategoriaService service;
+	private ClienteService service;
 
 	// value é uma prop  do requestMapping que adiciona os parametros da requição
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
@@ -31,7 +31,7 @@ public class CategoriaResource {
 	public ResponseEntity<?> find (@PathVariable Integer id) throws ObjectNotFoundException {
 
 	
-		Categoria obj = service.buscar(id);
+		Cliente obj = service.buscar(id);
 		
 		return ResponseEntity.ok(obj);
 	}

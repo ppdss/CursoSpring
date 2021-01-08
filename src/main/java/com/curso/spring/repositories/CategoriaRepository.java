@@ -1,9 +1,9 @@
-package com.example.demo.repositories;
+package com.curso.spring.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.domain.Categoria;
+import com.curso.spring.domain.Categoria;
 
 /*Interface capaz de realizar as operações no banco de dados extendendo JpaRepository,
  *  que é um tipo especial do Spring capaz de acessar os dados do banco com base em um tipo passado.

@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.curso.spring.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;

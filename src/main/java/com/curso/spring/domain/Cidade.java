@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.curso.spring.domain;
 
 import java.io.Serializable;
 
@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cidade  implements Serializable {
@@ -23,6 +25,7 @@ public class Cidade  implements Serializable {
 	 ManyToOne significa a relação de um muitos para um
 	 ou seja,  existem várias cidades para um estado
 	 * */
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "estado_id")
 	private Estado estado;

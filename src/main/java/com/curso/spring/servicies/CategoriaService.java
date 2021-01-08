@@ -1,14 +1,14 @@
-package com.example.demo.servicies;
+package com.curso.spring.servicies;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Categoria;
-import com.example.demo.repositories.CategoriaRepository;
+import com.curso.spring.domain.Categoria;
+import com.curso.spring.repositories.CategoriaRepository;
 
-import com.example.demo.servicies.exceptions.ObjectNotFoundException;
+import com.curso.spring.servicies.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {

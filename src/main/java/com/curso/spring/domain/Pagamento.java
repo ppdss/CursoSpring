@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.curso.spring.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED) // CRIA UMA TABELA PARA CADA CLASSE
@@ -22,7 +23,7 @@ public abstract class Pagamento  implements Serializable {
 	private Integer id;
 	private Integer estado;
 
-	// mapeamento 1 para 1
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId // garante que o id do pedido é o mesmo do pagamento

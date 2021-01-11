@@ -22,7 +22,7 @@ public class PedidoService {
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
-	public Pedido buscar(Integer id) throws  ObjectNotFoundException {
+	public Pedido find(Integer id) throws  ObjectNotFoundException {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException(
 				"Objeto não encontrado! " + id +

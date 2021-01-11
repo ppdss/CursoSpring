@@ -21,7 +21,7 @@ public class ClienteService {
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
-	public Cliente buscar(Integer id) throws  ObjectNotFoundException {
+	public Cliente find(Integer id) throws  ObjectNotFoundException {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException(
 				"Objeto não encontrado! " + id +

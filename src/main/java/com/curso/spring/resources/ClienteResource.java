@@ -28,10 +28,10 @@ public class ClienteResource {
 	// ResponseEntity encapsula respostas REST
 	// parâmetro precisa da anotação  @PathVariable para mapear o id vindo da url para o id que será buscado
 	 */
-	public ResponseEntity<?> find (@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Cliente> find (@PathVariable Integer id) throws ObjectNotFoundException {
 
 	
-		Cliente obj = service.buscar(id);
+		Cliente obj = service.find(id);
 		
 		return ResponseEntity.ok(obj);
 	}

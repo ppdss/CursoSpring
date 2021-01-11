@@ -22,7 +22,7 @@ public class CategoriaService {
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
-	public Categoria buscar(Integer id) throws  ObjectNotFoundException {
+	public Categoria find(Integer id) throws  ObjectNotFoundException {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException(
 				"Objeto não encontrado! " + id +
@@ -30,6 +30,12 @@ public class CategoriaService {
 	}
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
+		return repo.save(obj);
+	}
+	// metodo save serve tanto pra inserir quanto para atualizar
+	// se o id do obj for nulo ele insere, se n, atualiza
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
 		return repo.save(obj);
 	}
 }

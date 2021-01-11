@@ -2,6 +2,8 @@ package com.curso.spring.resources;
 
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.curso.spring.domain.Categoria;
+import com.curso.spring.dto.CategoriaDTO;
 import com.curso.spring.servicies.CategoriaService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -39,6 +42,20 @@ public class CategoriaResource {
 		
 		return ResponseEntity.ok(obj);
 	}
+	
+
+	@RequestMapping(method= RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		
+		// Stream é um recurso para percorrer a lista
+		// Map faz uma operação para cada item da lista
+		// cada obj cria um objeto DTO
+		// Collectors.toList() retorna a stream para lista
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
+	} 
 	
 	@RequestMapping(method=RequestMethod.POST)
 	/*@RequestBod y FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE*/

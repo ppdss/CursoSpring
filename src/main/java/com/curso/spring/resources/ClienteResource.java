@@ -1,6 +1,8 @@
 package com.curso.spring.resources;
 
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.curso.spring.domain.Cliente;
 import com.curso.spring.dto.ClienteDTO;
+import com.curso.spring.dto.ClienteNewDTO;
 import com.curso.spring.servicies.ClienteService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -40,6 +44,19 @@ public class ClienteResource {
 		Cliente obj = service.find(id);
 		
 		return ResponseEntity.ok(obj);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	/*@RequestBody FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE
+	 * @Valid faz com que o objDto seja validado com as anotações
+	 * criadas no CategoriaDto antes de entrar no método
+	 * */
+	public ResponseEntity<Void> insert(@Valid @RequestBody  ClienteNewDTO objDto) {
+		Cliente obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)

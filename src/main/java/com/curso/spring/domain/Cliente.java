@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -30,9 +31,9 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	// cliente conhece seus endereços * proteção cíclica
-	
-	@OneToMany(mappedBy="cliente")	
+	// cascade é o comportamento da associação na deleção ou atualização
+	// toda operação que modificar um cliente vai refletir em cascata nos endereços
+	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)	// cliente conhece seus endereços * proteção cíclica
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	// para criar uma entidade fraca usa-se o ElementCollection

@@ -12,10 +12,12 @@ import javax.persistence.OneToOne;
 
 import com.curso.spring.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED) // CRIA UMA TABELA PARA CADA CLASSE
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")// definindo um campo adicional type
+// tipo pagamento (cartão ou boleto)
 public abstract class Pagamento  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

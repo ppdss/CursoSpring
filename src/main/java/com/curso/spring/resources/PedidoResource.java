@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.curso.spring.domain.Categoria;
 import com.curso.spring.domain.Pedido;
-import com.curso.spring.dto.CategoriaDTO;
 import com.curso.spring.servicies.PedidoService;
 
 import javassist.tools.rmi.ObjectNotFoundException;

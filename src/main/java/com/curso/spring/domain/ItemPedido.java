@@ -1,6 +1,8 @@
 package com.curso.spring.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ public class ItemPedido implements Serializable {
 	public ItemPedido() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
@@ -112,5 +115,21 @@ public class ItemPedido implements Serializable {
 		return true;
 	}
 	
-	
+	@Override
+	public String toString() {
+		
+		// faz formatação de dinheiro com argumento a localidade
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome());
+		builder.append(", Quantidade: ");
+		builder.append(getQuantidade());
+		builder.append(", Preço unitário:");
+		builder.append(nf.format(getPreco()));
+		builder.append(", Subtotal:");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
+
 }

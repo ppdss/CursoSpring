@@ -11,7 +11,6 @@ import com.curso.spring.domain.ItemPedido;
 import com.curso.spring.domain.PagamentoComBoleto;
 import com.curso.spring.domain.Pedido;
 import com.curso.spring.enums.EstadoPagamento;
-import com.curso.spring.repositories.ClienteRepository;
 import com.curso.spring.repositories.ItemPedidoRepository;
 import com.curso.spring.repositories.PagamentoRepository;
 import com.curso.spring.repositories.PedidoRepository;
@@ -42,7 +41,8 @@ public class PedidoService {
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	
-
+	@Autowired
+	private EmailService emailService;
 	
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
@@ -75,7 +75,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }

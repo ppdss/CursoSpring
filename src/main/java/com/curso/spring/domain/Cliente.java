@@ -31,11 +31,16 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@JsonIgnore
+	private String senha;
+	
 	// cascade é o comportamento da associação na deleção ou atualização
 	// toda operação que modificar um cliente vai refletir em cascata nos endereços
 	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)	// cliente conhece seus endereços * proteção cíclica
 	private List<Endereco> enderecos = new ArrayList<>();
 	
+	
+
 	// para criar uma entidade fraca usa-se o ElementCollection
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
@@ -50,15 +55,24 @@ public class Cliente implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo==null)? null : tipo.getCod();
+		this.senha = senha;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -31,11 +31,18 @@ public class PedidoService {
 	@Autowired
 	private BoletoService boletoService;
 
+	
+	@Autowired
+	private ClienteService clienteService;
+	
 	@Autowired
 	private ProdutoService produtoService;
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
@@ -51,6 +58,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if(obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -62,10 +70,12 @@ public class PedidoService {
 		
 		for(ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
 			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
 }

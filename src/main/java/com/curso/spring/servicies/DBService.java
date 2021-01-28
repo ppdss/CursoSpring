@@ -90,7 +90,7 @@ public class DBService {
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 		
-		Cliente cli1 = new Cliente(null, "Pedro Paulo", "pp@gmail.com", "13023589907",
+		Cliente cli1 = new Cliente(null, "Pedro Paulo", "silva.pedropaulosantos@gmail.com", "13023589907",
 				TipoCliente.PESSOAFISICA);
 		
 		//adicionando telefones

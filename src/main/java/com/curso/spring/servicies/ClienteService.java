@@ -16,9 +16,12 @@ import com.curso.spring.domain.Cliente;
 import com.curso.spring.domain.Endereco;
 import com.curso.spring.dto.ClienteDTO;
 import com.curso.spring.dto.ClienteNewDTO;
+import com.curso.spring.enums.Perfil;
 import com.curso.spring.enums.TipoCliente;
 import com.curso.spring.repositories.ClienteRepository;
 import com.curso.spring.repositories.EnderecoRepository;
+import com.curso.spring.security.UserSS;
+import com.curso.spring.servicies.exceptions.AuthorizationException;
 import com.curso.spring.servicies.exceptions.DataIntegrityException;
 import com.curso.spring.servicies.exceptions.ObjectNotFoundException;
 
@@ -41,6 +44,10 @@ public class ClienteService {
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
 	public Cliente find(Integer id) throws  ObjectNotFoundException {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException(
 				"Objeto não encontrado! " + id +

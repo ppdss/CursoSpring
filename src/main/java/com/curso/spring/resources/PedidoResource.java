@@ -45,10 +45,6 @@ public class PedidoResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	/*@RequestBody FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE
-	 * @Valid faz com que o objDto seja validado com as anotações
-	 * criadas no CategoriaDto antes de entrar no método
-	 * */
 	public ResponseEntity<Void> insert(@Valid @RequestBody  Pedido obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

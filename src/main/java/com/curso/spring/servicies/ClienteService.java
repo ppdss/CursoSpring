@@ -51,7 +51,10 @@ public class ClienteService {
 	private ImageService imageService;
 	
 	@Value("${img.prefix.client.profile}")
-	String prefix;
+	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private Integer size;
 	
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
@@ -132,6 +135,11 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		jpgImage =imageService.croupSquare(jpgImage);
+		
+		jpgImage =imageService.resize(jpgImage, size);
+		
 		// Definindo o nome do arquivo que sera mandado pro S3
 		String fileName = prefix + user.getId() + ".jpg";
 		

@@ -9,10 +9,12 @@ public class ValidationError extends StandardError {
 	private List<FieldMessage> list = new ArrayList<>();
 	
 	
-	public ValidationError(Integer status, String msg, Long timeStamp) {
-		super(status, msg, timeStamp);
-		
+
+
+	public ValidationError(Long timestamp, Integer status, String error, String message, String path) {
+		super(timestamp, status, error, message, path);
 	}
+
 
 	// no java, o nome após o get (Ex: getErros -> erros) 
 	// é que o Json irá exibir

@@ -96,6 +96,21 @@ public class ClienteService {
 	public List<Cliente> findAll(){
 		return repo.findAll();
 	}
+	
+	public Cliente findByEmail(String email) {
+		
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Cliente obj = repo.findByEmail(email);
+		
+		if(obj == null) {
+			throw new ObjectNotFoundException("Cliente não encontrado! Id:" + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
+	}
 
 	// Page é uma classse do spring para encapsular informação
 	// e operações sobre a paginação
@@ -144,6 +159,5 @@ public class ClienteService {
 		String fileName = prefix + user.getId() + ".jpg";
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
-		
 	}
 }

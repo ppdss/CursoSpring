@@ -37,7 +37,6 @@ public class ClienteResource {
 
 	// value é uma prop  do requestMapping que adiciona os parametros da requição
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	
 	/*
 	// ResponseEntity encapsula respostas REST
 	// parâmetro precisa da anotação  @PathVariable para mapear o id vindo da url para o id que será buscado
@@ -49,6 +48,13 @@ public class ClienteResource {
 		
 		return ResponseEntity.ok(obj);
 	}
+	
+	@RequestMapping(value = "/email", method=RequestMethod.GET)	
+	public ResponseEntity<Cliente> find (@RequestParam(value="value") String email) throws ObjectNotFoundException {
+			Cliente obj = service.findByEmail(email);
+			return ResponseEntity.ok(obj);
+		}
+		
 	
 	@RequestMapping(method=RequestMethod.POST)
 	/*@RequestBody FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE

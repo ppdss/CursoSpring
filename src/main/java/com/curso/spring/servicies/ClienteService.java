@@ -1,5 +1,6 @@
 package com.curso.spring.servicies;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.curso.spring.domain.Cidade;
 import com.curso.spring.domain.Cliente;
@@ -39,6 +41,10 @@ public class ClienteService {
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
+	
+	@Autowired
+	private S3Service s3Service;
+	
 	
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
@@ -110,5 +116,23 @@ public class ClienteService {
 	private void updateData(Cliente newObj, Cliente obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
+	}
+	
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		// salvando uri no cliente logado
+		Optional<Cliente> obj = repo.findById(user.getId());
+		Cliente cli = obj.orElseThrow(()-> new ObjectNotFoundException(
+				"Objeto não encontrado! "));
+		cli.setImageUrl(uri.toString());
+		repo.save(cli);
+		
+		return uri;
 	}
 }

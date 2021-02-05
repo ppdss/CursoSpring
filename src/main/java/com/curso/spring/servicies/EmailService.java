@@ -1,9 +1,10 @@
 package com.curso.spring.servicies;
 
-import org.springframework.mail.SimpleMailMessage;
-
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.mail.SimpleMailMessage;
+
+import com.curso.spring.domain.Cliente;
 import com.curso.spring.domain.Pedido;
 
 public interface EmailService {
@@ -18,4 +19,5 @@ public interface EmailService {
 	// MimeMessage email HTML
 	void sendHtmlEmail(MimeMessage msg);
 	
+	void sendNewPasswordEmail(Cliente cliente, String newPass);
 }

@@ -14,6 +14,7 @@ import com.curso.spring.domain.Cliente;
 import com.curso.spring.domain.ItemPedido;
 import com.curso.spring.domain.PagamentoComBoleto;
 import com.curso.spring.domain.Pedido;
+import com.curso.spring.domain.Produto;
 import com.curso.spring.enums.EstadoPagamento;
 import com.curso.spring.repositories.ItemPedidoRepository;
 import com.curso.spring.repositories.PagamentoRepository;
@@ -21,6 +22,7 @@ import com.curso.spring.repositories.PedidoRepository;
 import com.curso.spring.security.UserSS;
 import com.curso.spring.servicies.exceptions.AuthorizationException;
 import com.curso.spring.servicies.exceptions.ObjectNotFoundException;
+import com.curso.spring.servicies.exceptions.QuantidadeProdutoException;
 
 @Service
 public class PedidoService {
@@ -62,6 +64,15 @@ public class PedidoService {
 	}
 	@Transactional
 	public Pedido insert(Pedido obj) {
+		
+		for(ItemPedido ip : obj.getItens()) {
+			Produto produto = produtoService.find(ip.getProduto().getId());
+			Integer qtdEstoque = produto.getQtdEstoque();
+			if(qtdEstoque < ip.getQuantidade()) {
+				throw new QuantidadeProdutoException("Quantidade de produtos em estoque insuficiente.");
+			}
+		}
+		
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
@@ -79,6 +90,7 @@ public class PedidoService {
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));
 			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
 			ip.setPedido(obj);
+			ip.getProduto().setQtdEstoque(ip.getProduto().getQtdEstoque() - 1);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);

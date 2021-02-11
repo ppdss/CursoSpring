@@ -17,6 +17,17 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+/*
+ **ANOTAÇÕES**
+ * @JsonBackReference -> Utilizado para sinalizar que já tabela já foi serializada por outra
+ * @JoinTable  define tabela de relação entre duas tabelas
+ * joinColumns = @JoinColunm() -> indica o nome da chave estrangeira da classe atual.
+ * inverseJoinColumns -> indica o nome da chave estrangeira da classe externa
+ * @JsonIgnore -> Por padrão do Spring, qualquer função get é serializada, essa anotação faz o objeto não ser serializado
+ * Utiliza-se no lugar do JsonBackReference para não serializar uma tabela que ja foi serializada por outra
+ * 
+ * */
 @Entity
 public class Produto implements Serializable {
 
@@ -27,12 +38,9 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
+	private Integer qtdEstoque;
 
 	
-	// @JsonBackReference Utilizado para sinalizar que já foi referenciada essa tabela do outro lado
-	// no caso @categoria, para que nao haja referencia ciclica 
-	// Ex: Categoria busca produtos e produtos procura categorias
-	// @JoinTable  define tabela de relação entre produtos e categorias (n para n)
 	@JsonIgnore
 	@ManyToMany	
 	@JoinTable(name = "PRODUTO_CATEGORIA", // nome da tabela n para n com as relações entre categorias e produtos 
@@ -50,14 +58,15 @@ public class Produto implements Serializable {
 		
 	}
 
-	public Produto(Integer id, String nome, Double preco ) {
+	public Produto(Integer id, String nome, Double preco, Integer qtdEstoque ) {
 		super();
 		this.id= id;
 		this.nome = nome;
 		this.preco = preco;		
+		this.qtdEstoque = qtdEstoque;
 	}
 
-	@JsonIgnore // qualquer função get é serializada, essa anotation não serializa os pedido
+	@JsonIgnore 
 	public List<Pedido> getPedidos(){
 		List<Pedido> lista = new ArrayList<>();
 		for (ItemPedido x: itens) {
@@ -106,6 +115,14 @@ public class Produto implements Serializable {
 		this.itens = itens;
 	}
 	
+	@JsonIgnore 
+	public Integer getQtdEstoque() {
+		return qtdEstoque;
+	}
+
+	public void setQtdEstoque(Integer qtd_estoque) {
+		this.qtdEstoque = qtd_estoque;
+	}
 
 	@Override
 	public int hashCode() {
@@ -131,6 +148,8 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 
 	
 	

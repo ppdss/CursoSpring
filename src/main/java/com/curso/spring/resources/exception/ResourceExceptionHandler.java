@@ -16,6 +16,7 @@ import com.curso.spring.servicies.exceptions.AuthorizationException;
 import com.curso.spring.servicies.exceptions.DataIntegrityException;
 import com.curso.spring.servicies.exceptions.FileException;
 import com.curso.spring.servicies.exceptions.ObjectNotFoundException;
+import com.curso.spring.servicies.exceptions.QuantidadeProdutoException;
 
 // Controller utilizado para lançar excessões http,
 // precisa-se dessa assinatura
@@ -58,10 +59,8 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(FileException.class)
-	public ResponseEntity<StandardError> file(FileException e, HttpServletRequest req){
-		
+	public ResponseEntity<StandardError> file(FileException e, HttpServletRequest req){		
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro de arquivo", e.getMessage(), req.getRequestURI());
-		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 	@ExceptionHandler(AmazonServiceException.class)
@@ -84,6 +83,12 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(AmazonS3Exception.class)
 	public ResponseEntity<StandardError> amazonS3(AmazonS3Exception e, HttpServletRequest req){
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro S3", e.getMessage(), req.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(QuantidadeProdutoException.class)
+	public ResponseEntity<StandardError> PedidoException(QuantidadeProdutoException e, HttpServletRequest req){
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro no pedido", e.getMessage(), req.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 	

@@ -11,6 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 
+/*
+ * * ANOTAÇÕES**
+ *@Entity -> Instancia classe no banco de dados com seus atributos sendo atributos da tabela
+ *@JsonManagedReference -> Anotação utilizada objeto onde se deseja obter os seus objetos associados Ex: Categorias e seus produtos
+ *@ManyToMany(mappedBy = "categorias") -> Inidica mapeamento N para N; (mappedBy = "categorias") indica que cada categoria carrega sua lista de produtos associado 
+ */
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,12 +26,8 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 
-	// @JsonManagedReference Utilizar no lado onde você quer
-	// que venha os objetos associados
-	// nesse caso, as categoria e seus produtos
-
 	
-	@ManyToMany(mappedBy = "categorias") // inidica que o mapeamento n para n foi criado no atributo categorias de Produto
+	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos  = new ArrayList<>();
 	 
 	public Categoria() {

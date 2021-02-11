@@ -25,26 +25,37 @@ import com.curso.spring.servicies.CategoriaService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
 
+/*
+ **ANOTAÇÕES**
+ * @RestController -> anota que classe será um contrador REST;
+ * @RequestMapping(value="/categorias") -> url do endpoint da requisição Ex: localhost:8080/categorias;
+ * @ResponseEntity -> encapsula respostas REST;
+ * @PathVariable Integer id-> mapea o id vindo da url para o id que será buscado;
+ * @Autowired -> instancia objeto da classe sem precisar dar new;
+ * 
+ 		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		// Stream é um recurso para percorrer a lista
+		// Map faz uma operação para cada item da lista
+		// cada obj cria um objeto DTO
+		// Collectors.toList() retorna a stream para lista
+		
+ *@RequestBody FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE;
+ *@Valid faz com que o objDto seja validado com as anotações criadas no DT antes de entrar no método;
+ *@PreAuthorize("hasAnyRole('ADMIN')") -> filtra requisição para saber se perfil é a autorizado ou n;
+ * 
+ * */
+
+
 @RestController
-//url do endpoint da requisição
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 
 	@Autowired
 	private CategoriaService service;
 
-	// value é uma prop  do requestMapping que adiciona os parametros da requição
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	
-	/*
-	// ResponseEntity encapsula respostas REST
-	// parâmetro precisa da anotação  @PathVariable para mapear o id vindo da url para o id que será buscado
-	 */
 	public ResponseEntity<Categoria> find (@PathVariable Integer id) throws ObjectNotFoundException {
-
-	
 		Categoria obj = service.find(id);
-		
 		return ResponseEntity.ok(obj);
 	}
 	
@@ -52,22 +63,12 @@ public class CategoriaResource {
 	@RequestMapping(method= RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		List<Categoria> list = service.findAll();
-		
-		// Stream é um recurso para percorrer a lista
-		// Map faz uma operação para cada item da lista
-		// cada obj cria um objeto DTO
-		// Collectors.toList() retorna a stream para lista
 		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
-		
 		return ResponseEntity.ok().body(listDTO);
 	} 
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.POST)
-	/*@RequestBody FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE
-	 * @Valid faz com que o objDto seja validado com as anotações
-	 * criadas no CategoriaDto antes de entrar no método
-	 * */
 	public ResponseEntity<Void> insert(@Valid @RequestBody  CategoriaDTO objDto) {
 		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);

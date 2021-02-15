@@ -20,6 +20,11 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/**
+ **ANOTAÇÕES** 
+ * // cascade=CascadeType.ALL, necessário para não dar erro de entidade transiente (peculiaridade do spring)
+ * */
+
 @Entity
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +37,7 @@ public class Pedido implements Serializable {
 	private Date instante;
 	
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido") // necessário para não dar erro de entidade
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido") 
 	private Pagamento pagamento;
 	
 	
@@ -60,8 +65,7 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 		this.enderecoEntrega = enderecoEntrega;
 	}
-// ao colocar o get no inicio do método
-	// o json serializa o valor desse get
+	
 	public double getTotal() {
 		double soma = 0.0;
 		for(ItemPedido ip: itens) {

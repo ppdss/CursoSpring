@@ -15,7 +15,7 @@ public class ItemPedido implements Serializable {
 	
 	@JsonIgnore //atributo não será seriallizado 
 	@EmbeddedId
-	private ItemPedidoPk id = new ItemPedidoPk();
+	private ItemPedidoPk id = new ItemPedidoPk(); // id é um atributo composto de Pedido e Produto
 	
 	private Double desconto;
 	private Integer quantidade;

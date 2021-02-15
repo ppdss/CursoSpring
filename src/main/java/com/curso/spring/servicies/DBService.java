@@ -54,10 +54,17 @@ public class DBService {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
-	@Autowired
+	
 	private PagamentoRepository pagamentoRepository;
+	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	
+	/*Maneira de instanciar um objeto sem o Autowired*/
+	public DBService(PagamentoRepository pagamentoRepository) {
+		this.pagamentoRepository = pagamentoRepository;
+	}
 	 
 	
 	

@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.curso.spring.domain.Cliente;
+import com.curso.spring.domain.Endereco;
 import com.curso.spring.domain.ItemPedido;
 import com.curso.spring.domain.PagamentoComBoleto;
 import com.curso.spring.domain.Pedido;
-import com.curso.spring.domain.Produto;
 import com.curso.spring.enums.EstadoPagamento;
 import com.curso.spring.repositories.ItemPedidoRepository;
 import com.curso.spring.repositories.PagamentoRepository;
@@ -52,6 +52,9 @@ public class PedidoService {
 	@Autowired
 	private EmailService emailService;
 	
+	@Autowired
+	private EnderecoService enderecoService;
+	
 	// Optional é uma classe container que devolve null 
 	// em vez de retornar null pointer exception 
 	// ao não encontrar o objeto com o id indicado
@@ -66,8 +69,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		
 		for(ItemPedido ip : obj.getItens()) {
-			Produto produto = produtoService.find(ip.getProduto().getId());
-			Integer qtdEstoque = produto.getQtdEstoque();
+			Integer qtdEstoque = produtoService.find(ip.getProduto().getId()).getQtdEstoque();
 			if(qtdEstoque < ip.getQuantidade()) {
 				throw new QuantidadeProdutoException("Quantidade de produtos em estoque insuficiente.");
 			}
@@ -82,15 +84,16 @@ public class PedidoService {
 			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
 			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
-		obj = repo.save(obj);
+		Endereco end = enderecoService.findAddressFromCli(obj.getEnderecoEntrega().getId(), obj.getCliente().getId());
+		obj.setEnderecoEntrega(end);
 		pagamentoRepository.save(obj.getPagamento());
-		
 		for(ItemPedido ip : obj.getItens()) {
+			Integer qtdEstoque = produtoService.find(ip.getProduto().getId()).getQtdEstoque();
 			ip.setDesconto(0.0);
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));
 			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
 			ip.setPedido(obj);
-			ip.getProduto().setQtdEstoque(ip.getProduto().getQtdEstoque() - 1);
+			ip.getProduto().setQtdEstoque(qtdEstoque - ip.getQuantidade());
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);

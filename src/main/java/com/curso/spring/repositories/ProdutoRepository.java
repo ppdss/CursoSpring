@@ -17,8 +17,10 @@ import com.curso.spring.domain.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 
-	// Anotação para criar a query sem ter que implementar ela em outra
-	// classe, como é comum em interfaces
+	
+	/*@Query -> Anotação para criar a query sem ter que implementar ela em outra classe, como é comum em interfaces
+	 * */
+
 	@Query("SELECT DISTINCT obj FROM Produto obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat in :categorias")
 	Page<Produto> search(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
 

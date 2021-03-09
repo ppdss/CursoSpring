@@ -143,8 +143,8 @@ public class DBService {
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 		
-		Cliente cli1 = new Cliente(null, "Pedro Paulo", "silva.pedropaulosantos@gmail.com", "13023589907",
-				TipoCliente.PESSOAFISICA, pe.encode(".josePaulo25#"));
+		Cliente cli1 = new Cliente(null, "Pedro Paulo", "pp@gmail.com", "13023589907",
+				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.addPerfil(Perfil.ADMIN);
 		Cliente cli2 = new Cliente(null, "Maria", "silva.maria@gmail.com", "63535624037",
 				TipoCliente.PESSOAFISICA, pe.encode(".josePaulo25#"));

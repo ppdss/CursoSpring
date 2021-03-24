@@ -142,6 +142,8 @@ public class DBService {
 		Cidade c1 = new Cidade(null, "Belo Horizonte", est1);
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
+		Cidade c4 = new Cidade(null, "Guarapari", est5);
+		Cidade c5 = new Cidade(null, "Vitória", est5);
 		
 		Cliente cli1 = new Cliente(null, "Pedro Paulo", "pp@gmail.com", "13023589907",
 				TipoCliente.PESSOAFISICA, pe.encode("123"));
@@ -180,6 +182,7 @@ public class DBService {
 		 * */ 
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
+		est6.getCidades().addAll(Arrays.asList(c4, c5));
 		
 		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3,p12, p13, p14, p15, p16, p17, p18, p19, p20,
 				p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
@@ -263,7 +266,7 @@ public class DBService {
 				p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
 				p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
 		estadoRepository.saveAll(Arrays.asList(est1,est2,est3,est4,est5,est6));
-		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5));
 		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2,e3));
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));

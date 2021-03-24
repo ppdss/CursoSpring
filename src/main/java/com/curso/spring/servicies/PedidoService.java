@@ -84,7 +84,7 @@ public class PedidoService {
 			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
 			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
-		Endereco end = enderecoService.findAddressFromCli(obj.getEnderecoEntrega().getId(), obj.getCliente().getId());
+		Endereco end = enderecoService.findAddressFromCli(obj.getEnderecoDeEntrega().getId(), obj.getCliente().getId());
 		obj.setEnderecoEntrega(end);
 		pagamentoRepository.save(obj.getPagamento());
 		for(ItemPedido ip : obj.getItens()) {

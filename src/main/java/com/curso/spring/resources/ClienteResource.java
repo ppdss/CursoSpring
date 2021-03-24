@@ -59,7 +59,7 @@ public class ClienteResource {
 	@RequestMapping(method=RequestMethod.POST)
 	/*@RequestBody FAZ O JSON SER CONVERTIDO PARA OBJ JAVA AUTOMATICAMENTE
 	 * @Valid faz com que o objDto seja validado com as anotações
-	 * criadas no CategoriaDto antes de entrar no método
+	 * criadas no ClienteDto antes de entrar no método
 	 * */
 	public ResponseEntity<Void> insert(@Valid @RequestBody  ClienteNewDTO objDto) {
 		Cliente obj = service.fromDTO(objDto);

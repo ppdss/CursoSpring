@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import com.curso.spring.domain.Categoria;
 import com.curso.spring.dto.CategoriaDTO;
 import com.curso.spring.servicies.CategoriaService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 /*
@@ -48,12 +51,15 @@ import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value="/categorias")
+@Api(value = "API REST E-COMMERCE")
+@CrossOrigin(origins = "*") // qualquer dominio acessa essa api
 public class CategoriaResource {
 
 	@Autowired
 	private CategoriaService service;
 
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
+	@ApiOperation(value="Retorna uma categoria por ID")
 	public ResponseEntity<Categoria> find (@PathVariable Integer id) throws ObjectNotFoundException {
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok(obj);
@@ -61,6 +67,7 @@ public class CategoriaResource {
 	
 
 	@RequestMapping(method= RequestMethod.GET)
+	@ApiOperation(value="Retorna uma lista de categorias")
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		List<Categoria> list = service.findAll();
 		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
@@ -69,6 +76,7 @@ public class CategoriaResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.POST)
+	@ApiOperation(value="Insere uma categoria")
 	public ResponseEntity<Void> insert(@Valid @RequestBody  CategoriaDTO objDto) {
 		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
@@ -79,6 +87,7 @@ public class CategoriaResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	@ApiOperation(value="Atualiza uma categoria")
 	public ResponseEntity<Void> update(@Valid @RequestBody  CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj =service.fromDTO(objDto);
 		obj.setId(id);
@@ -88,12 +97,14 @@ public class CategoriaResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value= "/{id}", method= RequestMethod.DELETE)
+	@ApiOperation(value="Deleta uma categoria")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)
+	@ApiOperation(value="Busca paginada de uma categorias")
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
